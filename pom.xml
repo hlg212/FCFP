@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.hlg212</groupId>
+    <groupId>io.github.hlg212</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>0.1.0-SNAPSHOT</version>
@@ -27,13 +27,18 @@
         <spring-boot-maven-plugin.version>2.0.3.RELEASE</spring-boot-maven-plugin.version>
 		<flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
 		<maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-		
+        <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
+
 		
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <maven-dependency-plugin.skip>true</maven-dependency-plugin.skip>
 		<maven-deploy-plugin.skip>false</maven-deploy-plugin.skip>
+        <maven-gpg-plugin.skip>true</maven-gpg-plugin.skip>
+        <maven-javadoc-plugin.skip>true</maven-javadoc-plugin.skip>
+
+
         <spring-boot-maven-plugin.skip>false</spring-boot-maven-plugin.skip>
 		
 		<flatten.flattenMode>oss</flatten.flattenMode>
@@ -48,22 +53,20 @@
     </properties>
 
     <scm>
-        <connection>scm:svn:https://192.168.0.3:8443/svn/DevelopmentDepart/police/17000_pt/common-parent/trunk</connection>
-        <developerConnection>scm:svn:https://192.168.0.3:8443/svn/DevelopmentDepart/police/17000_pt/common-parent/trunk</developerConnection>
-        <url>svn:https://192.168.0.3:8443/svn/DevelopmentDepart/police/17000_pt/common-parent/trunk</url>
+        <connection>scm:git:https://github.com/hlg212/FCFP.git</connection>
+        <developerConnection>scm:git:https://github.com/hlg212/FCFP.git</developerConnection>
+        <url>https://github.com/hlg212/FCFP.git</url>
     </scm>
 
     <distributionManagement>
         <snapshotRepository>
-            <id>user-snapshot</id>
-            <name>User Porject Snapshot</name>
-            <url>http://192.168.0.91:8081/nexus/content/repositories/snapshots/</url>
+            <id>nexus-snapshot</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
         <repository>
-            <id>user-release</id>
-            <name>User Porject Release</name>
-            <url>http://192.168.0.91:8081/nexus/content/repositories/releases/</url>
+            <id>nexus-release</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -77,6 +80,19 @@
             <url>https://repo.spring.io/milestone</url>
         </pluginRepository>
     </pluginRepositories>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>黄礼桂</name>
+            <email>xiaolaoban212@qq.com</email>
+        </developer>
+    </developers>
 
     <build>
 		 <finalName>${project.name}</finalName>
@@ -120,6 +136,23 @@
                             <attach>false</attach>
                             <classifier>exec</classifier>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <configuration>
+                    <skip>${maven-gpg-plugin.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -184,19 +217,21 @@
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <source>${maven.compiler.source}</source>
+                    <skip>${maven-javadoc-plugin.skip}</skip>
+                    <failOnError>false</failOnError>
                 </configuration>
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>attach-javadocs</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>jar</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
