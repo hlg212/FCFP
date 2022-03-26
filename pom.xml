@@ -7,7 +7,7 @@
     <groupId>io.github.hlg212</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
 
     <properties>
@@ -50,6 +50,7 @@
         <flatten.pomElements.properties>resolve</flatten.pomElements.properties>
         <flatten.pomElements.scm>keep</flatten.pomElements.scm>
 
+        <project.scm.id>my-scm-server</project.scm.id>
     </properties>
 
     <scm>
@@ -205,8 +206,8 @@
                 <configuration>
                     <releaseProfiles>release</releaseProfiles>
                     <checkModificationExcludeList>.project,.classpath,pom.xml,.settings,target</checkModificationExcludeList>
-                    <username>${git.name}</username>
-                    <password>${git.pwd}</password>
+<!--                    <username>${git.name}</username>-->
+<!--                    <password>${git.pwd}</password>-->
                 </configuration>
             </plugin>
 
