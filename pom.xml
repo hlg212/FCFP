@@ -51,12 +51,16 @@
         <project.scm.id>my-scm-server</project.scm.id>
     </properties>
 
+    <description>FCF工程构建管理工程,统一项目构建方式</description>
+
+    <url>https://github.com/hlg212/FCFP</url>
+
     <scm>
         <connection>scm:git:https://github.com/hlg212/FCFP.git</connection>
         <developerConnection>scm:git:https://github.com/hlg212/FCFP.git</developerConnection>
         <url>https://github.com/hlg212/FCFP.git</url>
-    <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
